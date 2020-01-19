@@ -1,4 +1,4 @@
-package jezorko.com.github.random;
+package com.glovoapp.deterministicrandom;
 
 public final class NextMethodResolutionFailed extends RuntimeException {
 

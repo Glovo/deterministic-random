@@ -1,10 +1,10 @@
-package jezorko.com.github.random;
+package com.glovoapp.deterministicrandom;
 
-import static jezorko.com.github.random.DeterministicRandomTestCases.methodArgument;
+import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.stream.Stream;
-import jezorko.com.github.random.DeterministicRandomTestCases.MethodUnderTest;
+import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

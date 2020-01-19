@@ -1,4 +1,4 @@
-package jezorko.com.github.random;
+package com.glovoapp.deterministicrandom;
 
 import static java.lang.Thread.currentThread;
 import static java.util.Arrays.stream;
