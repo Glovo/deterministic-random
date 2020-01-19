@@ -17,19 +17,21 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import org.junit.jupiter.params.provider.Arguments;
 
-class DeterministicRandomTestCases<T> {
+public final class DeterministicRandomTestCases<T> {
 
     private final Supplier<T> randomsSupplier;
 
-    DeterministicRandomTestCases(Supplier<T> randomsSupplier) {
+    public DeterministicRandomTestCases(Supplier<T> randomsSupplier) {
         this.randomsSupplier = randomsSupplier;
     }
 
-    interface MethodUnderTest<T> extends Function<T, Object> {
+    public interface MethodUnderTest<T> extends Function<T, Object> {
 
     }
 
-    void shouldReturnDifferentValues_whenCalledFromMultipleLines(MethodUnderTest<T> method) {
+    public final void shouldReturnDifferentValues_whenCalledFromMultipleLines(
+        final MethodUnderTest<T> method
+    ) {
         final T deterministicRandom = randomsSupplier.get();
 
         final List<Object> results = new ArrayList<>();
@@ -45,7 +47,9 @@ class DeterministicRandomTestCases<T> {
                            .allMatch(results.get(0)::equals));
     }
 
-    void shouldReturnDifferentValues_whenCalledInALoop(MethodUnderTest<T> method) {
+    public final void shouldReturnDifferentValues_whenCalledInALoop(
+        final MethodUnderTest<T> method
+    ) {
         final T deterministicRandom = randomsSupplier.get();
 
         final List<Object> results = new ArrayList<>();
@@ -57,7 +61,9 @@ class DeterministicRandomTestCases<T> {
                            .allMatch(results.get(0)::equals));
     }
 
-    void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(MethodUnderTest<T> method) {
+    public final void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(
+        final MethodUnderTest<T> method
+    ) {
         final List<T> randoms = range(0, 20)
             .mapToObj(it -> randomsSupplier.get())
             .collect(toList());
@@ -74,7 +80,9 @@ class DeterministicRandomTestCases<T> {
         results.forEach(list -> assertIterableEquals(firstResult, list));
     }
 
-    void shouldReturnSameValues_whenCalledFromDifferentThreads(MethodUnderTest<T> method) {
+    public final void shouldReturnSameValues_whenCalledFromDifferentThreads(
+        final MethodUnderTest<T> method
+    ) {
         final int randomsAmount = 50;
 
         final List<T> randoms = range(0, randomsAmount)
@@ -105,7 +113,7 @@ class DeterministicRandomTestCases<T> {
         }
     }
 
-    static <T> Arguments methodArgument(final String name, final MethodUnderTest<T> method) {
+    public static <T> Arguments methodArgument(final String name, final MethodUnderTest<T> method) {
         return Arguments.of(new MethodUnderTest<T>() {
             @Override
             public Object apply(T deterministicRandom) {
