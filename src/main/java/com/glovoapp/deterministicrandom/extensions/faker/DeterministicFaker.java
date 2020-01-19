@@ -1,5 +1,7 @@
 package com.glovoapp.deterministicrandom.extensions.faker;
 
+import static com.glovoapp.deterministicrandom.extensions.DefaultExtensionValues.LOCALE;
+
 import com.github.javafaker.Faker;
 import com.glovoapp.deterministicrandom.DeterministicRandom;
 import java.util.Locale;
@@ -21,14 +23,19 @@ public final class DeterministicFaker extends Faker {
     }
 
     public static Faker create() {
-        return create(Locale.ENGLISH);
+        return create(LOCALE);
     }
 
     public static Faker create(final Locale locale) {
-        return create(locale, new DeterministicRandom());
+        return create(new DeterministicRandom(), locale);
     }
 
-    public static Faker create(final Locale locale, final DeterministicRandom deterministicRandom) {
+    public static Faker create(final DeterministicRandom deterministicRandom) {
+        return create(deterministicRandom, LOCALE);
+    }
+
+    public static Faker create(final DeterministicRandom deterministicRandom,
+                               final Locale locale) {
         return new Faker(locale, deterministicRandom);
     }
 
