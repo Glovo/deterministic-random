@@ -5,45 +5,31 @@ import com.glovoapp.deterministicrandom.DeterministicRandom;
 import java.util.Locale;
 
 /**
- * <h1 color="red">
- * This class is unsafe to use in production environment.<br/> Use this class for anything but
- * testing at your own risk!
- * </h1>
- * A {@link Faker} that uses {@link DeterministicRandom} for generating values.
+ * <h1 color="red"> This class is unsafe to use in production environment!</h1><br/>
+ * <h2 color="red">Use this class for anything but testing at your own risk.</h2><br/>
+ * Provides instances of {@link Faker} that generate values with {@link DeterministicRandom}.
  */
 public final class DeterministicFaker extends Faker {
 
-    private static final DeterministicFaker FAKER = new DeterministicFaker();
-
-    private final DeterministicRandom random;
+    private static final Faker FAKER = create();
 
     /**
-     * @return a global instance of {@link DeterministicFaker}
+     * @return a global instance of deterministic {@link Faker}
      */
     public static Faker deterministic() {
         return FAKER;
     }
 
-    public DeterministicFaker() {
-        this(new DeterministicRandom());
+    public static Faker create() {
+        return create(Locale.ENGLISH);
     }
 
-    private DeterministicFaker(final DeterministicRandom random) {
-        super(random);
-        this.random = random;
+    public static Faker create(final Locale locale) {
+        return create(locale, new DeterministicRandom());
     }
 
-    public DeterministicFaker(final Locale locale) {
-        this(locale, new DeterministicRandom());
+    public static Faker create(final Locale locale, final DeterministicRandom deterministicRandom) {
+        return new Faker(locale, deterministicRandom);
     }
 
-    private DeterministicFaker(final Locale locale, final DeterministicRandom random) {
-        super(locale, random);
-        this.random = random;
-    }
-
-    @Override
-    public final String toString() {
-        return getClass().getSimpleName() + '(' + random + ')';
-    }
 }
