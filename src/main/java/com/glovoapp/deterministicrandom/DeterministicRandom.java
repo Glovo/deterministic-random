@@ -52,12 +52,12 @@ import org.uncommons.maths.random.SeedException;
  *     System.out.println(values);
  * </pre>
  */
-class DeterministicRandom extends Random {
+public final class DeterministicRandom extends Random {
 
     private final Map<Integer, ThreadLocal<Random>> stackTraceHashCodesToRandoms = new ConcurrentHashMap<>();
     private final Function<? super Integer, ? extends Random> randomOfSeedSupplier;
 
-    DeterministicRandom() {
+    public DeterministicRandom() {
         this(it -> {
             try {
                 return new MersenneTwisterRNG(new DeterministicLongSeedGenerator(it));
@@ -67,17 +67,19 @@ class DeterministicRandom extends Random {
         });
     }
 
-    private DeterministicRandom(final Function<? super Integer, ? extends Random> randomOfSeedSupplier) {
+    private DeterministicRandom(
+        final Function<? super Integer, ? extends Random> randomOfSeedSupplier
+    ) {
         this.randomOfSeedSupplier = randomOfSeedSupplier;
     }
 
     @Override
-    public synchronized void setSeed(long seed) {
+    public final synchronized void setSeed(long seed) {
         // ignore
     }
 
     @Override
-    protected int next(int bits) {
+    protected final int next(int bits) {
         try {
             Random random = getForCurrentStackTrace();
             Method method = random.getClass()
@@ -90,112 +92,112 @@ class DeterministicRandom extends Random {
     }
 
     @Override
-    public void nextBytes(byte[] bytes) {
+    public final void nextBytes(byte[] bytes) {
         getForCurrentStackTrace().nextBytes(bytes);
     }
 
     @Override
-    public int nextInt() {
+    public final int nextInt() {
         return getForCurrentStackTrace().nextInt();
     }
 
     @Override
-    public int nextInt(int bound) {
+    public final int nextInt(int bound) {
         return getForCurrentStackTrace().nextInt(bound);
     }
 
     @Override
-    public long nextLong() {
+    public final long nextLong() {
         return getForCurrentStackTrace().nextLong();
     }
 
     @Override
-    public boolean nextBoolean() {
+    public final boolean nextBoolean() {
         return getForCurrentStackTrace().nextBoolean();
     }
 
     @Override
-    public float nextFloat() {
+    public final float nextFloat() {
         return getForCurrentStackTrace().nextFloat();
     }
 
     @Override
-    public double nextDouble() {
+    public final double nextDouble() {
         return getForCurrentStackTrace().nextDouble();
     }
 
     @Override
-    public synchronized double nextGaussian() {
+    public final synchronized double nextGaussian() {
         return getForCurrentStackTrace().nextGaussian();
     }
 
     @Override
-    public IntStream ints() {
+    public final IntStream ints() {
         return getForCurrentStackTrace().ints();
     }
 
     @Override
-    public IntStream ints(final long streamSize) {
+    public final IntStream ints(final long streamSize) {
         return getForCurrentStackTrace().ints(streamSize);
     }
 
     @Override
-    public IntStream ints(final int randomNumberOrigin,
-                          final int randomNumberBound) {
+    public final IntStream ints(final int randomNumberOrigin,
+                                final int randomNumberBound) {
         return getForCurrentStackTrace().ints(randomNumberOrigin, randomNumberBound);
     }
 
     @Override
-    public IntStream ints(final long streamSize,
-                          final int randomNumberOrigin,
-                          final int randomNumberBound) {
+    public final IntStream ints(final long streamSize,
+                                final int randomNumberOrigin,
+                                final int randomNumberBound) {
         return getForCurrentStackTrace().ints(streamSize, randomNumberOrigin, randomNumberBound);
     }
 
 
     @Override
-    public LongStream longs() {
+    public final LongStream longs() {
         return getForCurrentStackTrace().longs();
     }
 
     @Override
-    public LongStream longs(final long streamSize) {
+    public final LongStream longs(final long streamSize) {
         return getForCurrentStackTrace().longs(streamSize);
     }
 
     @Override
-    public LongStream longs(final long randomNumberOrigin,
-                            final long randomNumberBound) {
+    public final LongStream longs(final long randomNumberOrigin,
+                                  final long randomNumberBound) {
         return getForCurrentStackTrace().longs(randomNumberOrigin, randomNumberBound);
     }
 
     @Override
-    public LongStream longs(final long streamSize,
-                            final long randomNumberOrigin,
-                            final long randomNumberBound) {
+    public final LongStream longs(final long streamSize,
+                                  final long randomNumberOrigin,
+                                  final long randomNumberBound) {
         return getForCurrentStackTrace().longs(streamSize, randomNumberOrigin, randomNumberBound);
     }
 
     @Override
-    public DoubleStream doubles() {
+    public final DoubleStream doubles() {
         return getForCurrentStackTrace().doubles();
     }
 
     @Override
-    public DoubleStream doubles(final long streamSize) {
+    public final DoubleStream doubles(final long streamSize) {
         return getForCurrentStackTrace().doubles(streamSize);
     }
 
     @Override
-    public DoubleStream doubles(final double randomNumberOrigin,
-                                final double randomNumberBound) {
+    public final DoubleStream doubles(final double randomNumberOrigin,
+                                      final double randomNumberBound) {
         return getForCurrentStackTrace().doubles(randomNumberOrigin, randomNumberBound);
     }
 
     @Override
-    public DoubleStream doubles(final long streamSize,
-                                final double randomNumberOrigin,
-                                final double randomNumberBound) {
+    public final DoubleStream doubles(final long streamSize,
+                                      final double randomNumberOrigin,
+                                      final double randomNumberBound) {
         return getForCurrentStackTrace().doubles(streamSize, randomNumberOrigin, randomNumberBound);
     }
 
@@ -211,8 +213,8 @@ class DeterministicRandom extends Random {
     }
 
     @Override
-    public String toString() {
-        return DeterministicRandom.class.getSimpleName()
+    public final String toString() {
+        return getClass().getSimpleName()
             + "(called from "
             + stackTraceHashCodesToRandoms.size()
             + " places)";
