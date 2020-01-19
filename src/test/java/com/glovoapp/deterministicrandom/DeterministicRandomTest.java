@@ -3,6 +3,7 @@ package com.glovoapp.deterministicrandom;
 import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.TypedArguments;
 import java.util.stream.Stream;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
 import org.junit.jupiter.api.Test;
@@ -55,14 +56,14 @@ class DeterministicRandomTest {
 
 
     private static Stream<Arguments> provideMethodReferences() {
-        return Stream.of(
+        return Stream.<TypedArguments<DeterministicRandom>>of(
             methodArgument("nextBoolean()", DeterministicRandom::nextBoolean),
             methodArgument("nextInt()", (MethodUnderTest<DeterministicRandom>) DeterministicRandom::nextInt),
             methodArgument("nextInt(bound)", (DeterministicRandom dr) -> dr.nextInt(100)),
             methodArgument("nextLong()", DeterministicRandom::nextLong),
             methodArgument("nextFloat()", DeterministicRandom::nextFloat),
             methodArgument("nextDouble()", DeterministicRandom::nextDouble)
-        );
+        ).map(TypedArguments::toArguments);
     }
 
 }

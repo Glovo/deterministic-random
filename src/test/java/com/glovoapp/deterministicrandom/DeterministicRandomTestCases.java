@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -15,6 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class DeterministicRandomTestCases<T> {
@@ -113,18 +115,45 @@ public final class DeterministicRandomTestCases<T> {
         }
     }
 
-    public static <T> Arguments methodArgument(final String name, final MethodUnderTest<T> method) {
-        return Arguments.of(new MethodUnderTest<T>() {
-            @Override
-            public Object apply(T deterministicRandom) {
-                return method.apply(deterministicRandom);
-            }
+    public static final class TypedArguments<T> implements Arguments {
 
-            @Override
-            public String toString() {
-                return name;
-            }
-        });
+        private final String name;
+        private final MethodUnderTest<T> method;
+
+        private TypedArguments(final String name,
+                               final MethodUnderTest<T> method) {
+            this.name = name;
+            this.method = method;
+        }
+
+        @Override
+        public Object[] get() {
+            return new Object[]{
+                new MethodUnderTest<T>() {
+                    @Override
+                    public Object apply(final T deterministicRandom) {
+                        return method.apply(deterministicRandom);
+                    }
+
+                    @Override
+                    public String toString() {
+                        return name;
+                    }
+                }
+            };
+        }
+
+    }
+
+    public static <T, Field> TypedArguments<T> methodArgument(final String name,
+                                                              final Function<T, Field> getter,
+                                                              final MethodUnderTest<Field> method) {
+        return methodArgument(name, (T it) -> method.apply(getter.apply(it)));
+    }
+
+    public static <T> TypedArguments<T> methodArgument(final String name,
+                                                       final MethodUnderTest<T> method) {
+        return new TypedArguments<>(name, method);
     }
 
 }

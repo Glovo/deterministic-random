@@ -2,7 +2,9 @@ package com.glovoapp.deterministicrandom.extensions.faker;
 
 import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
 
+import com.github.javafaker.Animal;
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
 import java.util.stream.Stream;
@@ -57,14 +59,10 @@ class DeterministicFakerTest {
 
     private static Stream<Arguments> provideMethodReferences() {
         return Stream.of(
-            methodArgument("name().name()", (Faker df) -> df.name()
-                                                            .name()),
-            methodArgument("name().firstName()", (Faker df) -> df.name()
-                                                                 .firstName()),
-            methodArgument("name().lastName()", (Faker df) -> df.name()
-                                                                .lastName()),
-            methodArgument("animal().name()", (Faker df) -> df.animal()
-                                                              .name())
+            methodArgument("name().name()", Faker::name, Name::name),
+            methodArgument("name().firstName()", Faker::name, Name::firstName),
+            methodArgument("name().lastName()", Faker::name, Name::lastName),
+            methodArgument("animal().name()", Faker::animal, Animal::name)
         );
     }
 
