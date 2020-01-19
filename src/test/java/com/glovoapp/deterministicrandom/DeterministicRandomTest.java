@@ -3,9 +3,9 @@ package com.glovoapp.deterministicrandom;
 import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.TypedArguments;
 import java.util.stream.Stream;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,38 +32,42 @@ class DeterministicRandomTest {
 
     @ParameterizedTest
     @MethodSource("provideMethodReferences")
-    void shouldReturnDifferentValues_whenCalledFromMultipleLines(final MethodUnderTest<DeterministicRandom> method) {
+    void shouldReturnDifferentValues_whenCalledFromMultipleLines(
+        final MethodUnderTest<DeterministicRandom> method) {
         TEST_CASES.shouldReturnDifferentValues_whenCalledFromMultipleLines(method);
     }
 
     @ParameterizedTest
     @MethodSource("provideMethodReferences")
-    void shouldReturnDifferentValues_whenCalledInALoop(final MethodUnderTest<DeterministicRandom> method) {
+    void shouldReturnDifferentValues_whenCalledInALoop(
+        final MethodUnderTest<DeterministicRandom> method) {
         TEST_CASES.shouldReturnDifferentValues_whenCalledInALoop(method);
     }
 
     @ParameterizedTest
     @MethodSource("provideMethodReferences")
-    void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(final MethodUnderTest<DeterministicRandom> method) {
+    void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(
+        final MethodUnderTest<DeterministicRandom> method) {
         TEST_CASES.shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(method);
     }
 
     @ParameterizedTest
     @MethodSource("provideMethodReferences")
-    void shouldReturnSameValues_whenCalledFromDifferentThreads(final MethodUnderTest<DeterministicRandom> method) {
+    void shouldReturnSameValues_whenCalledFromDifferentThreads(
+        final MethodUnderTest<DeterministicRandom> method) {
         TEST_CASES.shouldReturnSameValues_whenCalledFromDifferentThreads(method);
     }
 
 
-    private static Stream<Arguments> provideMethodReferences() {
+    private static Stream<? extends Arguments> provideMethodReferences() {
         return Stream.<TypedArguments<DeterministicRandom>>of(
             methodArgument("nextBoolean()", DeterministicRandom::nextBoolean),
-            methodArgument("nextInt()", (MethodUnderTest<DeterministicRandom>) DeterministicRandom::nextInt),
+            methodArgument("nextInt()", DeterministicRandom::nextInt),
             methodArgument("nextInt(bound)", (DeterministicRandom dr) -> dr.nextInt(100)),
             methodArgument("nextLong()", DeterministicRandom::nextLong),
             methodArgument("nextFloat()", DeterministicRandom::nextFloat),
             methodArgument("nextDouble()", DeterministicRandom::nextDouble)
-        ).map(TypedArguments::toArguments);
+        );
     }
 
 }
