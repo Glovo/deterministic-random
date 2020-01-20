@@ -1,10 +1,11 @@
 package com.glovoapp.deterministicrandom;
 
-import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
+import static com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.methodArgument;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.TypedArguments;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.MethodUnderTest;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.TypedArguments;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

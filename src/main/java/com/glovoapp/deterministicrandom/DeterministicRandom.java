@@ -17,10 +17,8 @@ import org.uncommons.maths.random.MersenneTwisterRNG;
 import org.uncommons.maths.random.SeedException;
 
 /**
- * <h1 color="red">
- * This class is unsafe to use in production environment.<br/> Use this class for anything but
- * testing at your own risk!
- * </h1>
+ * <h1 color="red"> This class is unsafe to use in production environment!</h1><br/>
+ * <h2 color="red">Use this class for anything but testing at your own risk.</h2><br/>
  * Wrapper over {@link Random} whose execution is random, yet deterministic.<br/> <br/>
  * "Deterministic" in the context of this class means that given a position in code (call stack), it
  * will yield the same values for each execution of said code. This behavior includes code being
@@ -51,6 +49,10 @@ import org.uncommons.maths.random.SeedException;
  *     // example output: [80, 82, 34, 42, 85]
  *     System.out.println(values);
  * </pre>
+ * <b>Testing</b><br/><br/>
+ * For a complete specification of this class's behavior, please see the {@link
+ * com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases}. All extensions should be
+ * tested using this class.
  */
 public final class DeterministicRandom extends Random {
 

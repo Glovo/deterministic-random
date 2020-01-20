@@ -1,13 +1,13 @@
 package com.glovoapp.deterministicrandom.extensions.jfairy;
 
-import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
+import static com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.methodArgument;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.company.Company;
 import com.devskiller.jfairy.producer.person.Person;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.TypedArguments;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.MethodUnderTest;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.TypedArguments;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

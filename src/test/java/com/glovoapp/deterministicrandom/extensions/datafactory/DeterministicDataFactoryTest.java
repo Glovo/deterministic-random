@@ -1,11 +1,11 @@
 package com.glovoapp.deterministicrandom.extensions.datafactory;
 
-import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
+import static com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.methodArgument;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.MethodUnderTest;
 import java.util.stream.Stream;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.glovoapp.deterministicrandom;
+package com.glovoapp.deterministicrandom.test;
 
 import static java.lang.Thread.sleep;
 import static java.util.stream.Collectors.toList;
@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -16,14 +15,19 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class DeterministicRandomTestCases<T> {
+/**
+ * Provides a set of test methods that define the behavior of {@link
+ * com.glovoapp.deterministicrandom.DeterministicRandom} and extensions.
+ *
+ * @param <ClassUnderTest> the class under test
+ */
+public final class DeterministicRandomTestCases<ClassUnderTest> {
 
-    private final Supplier<T> randomsSupplier;
+    private final Supplier<ClassUnderTest> randomsSupplier;
 
-    public DeterministicRandomTestCases(Supplier<T> randomsSupplier) {
+    public DeterministicRandomTestCases(Supplier<ClassUnderTest> randomsSupplier) {
         this.randomsSupplier = randomsSupplier;
     }
 
@@ -32,9 +36,9 @@ public final class DeterministicRandomTestCases<T> {
     }
 
     public final void shouldReturnDifferentValues_whenCalledFromMultipleLines(
-        final MethodUnderTest<T> method
+        final MethodUnderTest<ClassUnderTest> method
     ) {
-        final T deterministicRandom = randomsSupplier.get();
+        final ClassUnderTest deterministicRandom = randomsSupplier.get();
 
         final List<Object> results = new ArrayList<>();
 
@@ -50,9 +54,9 @@ public final class DeterministicRandomTestCases<T> {
     }
 
     public final void shouldReturnDifferentValues_whenCalledInALoop(
-        final MethodUnderTest<T> method
+        final MethodUnderTest<ClassUnderTest> method
     ) {
-        final T deterministicRandom = randomsSupplier.get();
+        final ClassUnderTest deterministicRandom = randomsSupplier.get();
 
         final List<Object> results = new ArrayList<>();
         for (int i = 0; i < 100; ++i) {
@@ -64,9 +68,9 @@ public final class DeterministicRandomTestCases<T> {
     }
 
     public final void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(
-        final MethodUnderTest<T> method
+        final MethodUnderTest<ClassUnderTest> method
     ) {
-        final List<T> randoms = range(0, 20)
+        final List<ClassUnderTest> randoms = range(0, 20)
             .mapToObj(it -> randomsSupplier.get())
             .collect(toList());
 
@@ -83,11 +87,11 @@ public final class DeterministicRandomTestCases<T> {
     }
 
     public final void shouldReturnSameValues_whenCalledFromDifferentThreads(
-        final MethodUnderTest<T> method
+        final MethodUnderTest<ClassUnderTest> method
     ) {
         final int randomsAmount = 50;
 
-        final List<T> randoms = range(0, randomsAmount)
+        final List<ClassUnderTest> randoms = range(0, randomsAmount)
             .mapToObj(it -> randomsSupplier.get())
             .collect(toList());
 

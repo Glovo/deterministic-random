@@ -1,12 +1,12 @@
 package com.glovoapp.deterministicrandom.extensions.faker;
 
-import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
+import static com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.methodArgument;
 
 import com.github.javafaker.Animal;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases;
-import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases;
+import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.MethodUnderTest;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
