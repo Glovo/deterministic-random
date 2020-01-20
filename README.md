@@ -75,3 +75,17 @@ final DataFactory df = DeterministicDataFactory.create();
 
 Due to the limitations of the `DataFactory` class, only one instance may be created with `DeterministicDataFactory`.
 Please note this will modify the global state and alter the behavior of all `DataFactory` objects!
+
+#### [Commons Lang](https://commons.apache.org/proper/commons-lang/)
+
+The deterministic extension for Commons Lang 3 library is provided by the 
+`com.glovoapp.deterministicrandom.extensions.apachecommons.DeterministicRandomUtils` and
+`com.glovoapp.deterministicrandom.extensions.apachecommons.DeterministicRandomStringUtils`.
+It does not support locale and modifies the global state of the `RandomUtils` and `RandomStringUtils` classes.
+
+```java
+DeterministicRandomStringUtils.makeDeterministic();
+
+// all static method calls will now be deterministic
+RandomStringUtils.randomAlphanumeric(10);
+```

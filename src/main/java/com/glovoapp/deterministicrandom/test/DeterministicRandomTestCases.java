@@ -27,6 +27,13 @@ public final class DeterministicRandomTestCases<ClassUnderTest> {
 
     private final Supplier<ClassUnderTest> randomsSupplier;
 
+    /**
+     * For static method collections.
+     */
+    public DeterministicRandomTestCases() {
+        this.randomsSupplier = () -> null;
+    }
+
     public DeterministicRandomTestCases(Supplier<ClassUnderTest> randomsSupplier) {
         this.randomsSupplier = randomsSupplier;
     }
@@ -158,6 +165,11 @@ public final class DeterministicRandomTestCases<ClassUnderTest> {
     public static <T> TypedArguments<T> methodArgument(final String name,
                                                        final MethodUnderTest<T> method) {
         return new TypedArguments<>(name, method);
+    }
+
+    public static <T> TypedArguments<T> methodArgument(final String name,
+                                                       final Supplier<?> method) {
+        return new TypedArguments<>(name, ignore -> method.get());
     }
 
 }
