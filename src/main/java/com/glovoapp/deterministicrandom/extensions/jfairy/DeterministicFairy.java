@@ -2,12 +2,11 @@ package com.glovoapp.deterministicrandom.extensions.jfairy;
 
 import static com.glovoapp.deterministicrandom.extensions.DefaultExtensionValues.LOCALE;
 
+import com.devskiller.jfairy.Bootstrap;
+import com.devskiller.jfairy.Bootstrap.Builder;
 import com.devskiller.jfairy.Fairy;
-import com.devskiller.jfairy.data.DataMaster;
-import com.devskiller.jfairy.data.MapBasedDataMaster;
-import com.devskiller.jfairy.producer.BaseProducer;
 import com.glovoapp.deterministicrandom.DeterministicRandom;
-import com.google.inject.Provider;
+import java.lang.reflect.Field;
 import java.util.Locale;
 
 /**
@@ -40,15 +39,24 @@ public final class DeterministicFairy {
 
     public static Fairy create(final DeterministicRandom deterministicRandom,
                                final Locale locale) {
-        return Fairy.create(createDataMasterProvider(deterministicRandom), locale);
+        final Builder builder = Bootstrap.builder()
+                                         .withLocale(locale);
+        injectRandomInto(builder, deterministicRandom);
+        return builder.build();
     }
 
-    private static Provider<DataMaster> createDataMasterProvider(final DeterministicRandom random) {
-        return () -> new MapBasedDataMaster(
-            new BaseProducer(
-                new DeterministicJFairyRandomGenerator(random)
-            )
-        );
+    private static void injectRandomInto(final Builder builder,
+                                         final DeterministicRandom deterministicRandom) {
+        try {
+            final Field randomGeneratorField = builder.getClass()
+                                                      .getDeclaredField("randomGenerator");
+            randomGeneratorField.setAccessible(true);
+            randomGeneratorField.set(builder, new DeterministicJFairyRandomGenerator(
+                deterministicRandom
+            ));
+        } catch (final NoSuchFieldException | IllegalAccessException exception) {
+            throw new FairyInitializationException(exception);
+        }
     }
 
 }

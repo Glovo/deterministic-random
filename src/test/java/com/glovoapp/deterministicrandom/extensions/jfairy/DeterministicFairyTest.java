@@ -3,6 +3,7 @@ package com.glovoapp.deterministicrandom.extensions.jfairy;
 import static com.glovoapp.deterministicrandom.DeterministicRandomTestCases.methodArgument;
 
 import com.devskiller.jfairy.Fairy;
+import com.devskiller.jfairy.producer.company.Company;
 import com.devskiller.jfairy.producer.person.Person;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases;
 import com.glovoapp.deterministicrandom.DeterministicRandomTestCases.MethodUnderTest;
@@ -54,7 +55,9 @@ class DeterministicFairyTest {
         return Stream.<TypedArguments<Fairy>>of(
             methodArgument("person().getFullName()", Fairy::person, Person::getFullName),
             methodArgument("person().getFirstName()", Fairy::person, Person::getFirstName),
-            methodArgument("person().getLastName()", Fairy::person, Person::getLastName)
+            methodArgument("person().getLastName()", Fairy::person, Person::getLastName),
+            methodArgument("company().getEmail()", Fairy::company, Company::getEmail),
+            methodArgument("company().getUrl()", Fairy::company, Company::getUrl)
         );
     }
 
