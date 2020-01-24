@@ -14,6 +14,15 @@ This library aims to combine the best of these two worlds: simplicity of using r
 
 ## Usage
 
+Before using this library, please take time to understand how data affects your tests.
+
+As a rule of thumb, this library is OK to use for tests where: 
+
+ 1. data does not matter, or
+ 2. data set is so large that manually creating it is not a viable option
+
+If you need to test against data with some particular requirements (for example: a name with unicode characters), it might be better to specify it manually.
+
 ### DeterministicRandom class
 
 The "deterministic random" data is provided by the `com.glovoapp.deterministicrandom.DeterministicRandom` class.
