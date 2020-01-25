@@ -15,6 +15,12 @@ public final class DeterministicFaker extends Faker {
 
     private static final Faker FAKER = create();
 
+    private DeterministicFaker() throws IllegalAccessException {
+        throw new IllegalAccessException(
+            getClass() + " is a static methods collection of which instances should not be created"
+        );
+    }
+
     /**
      * @return a global instance of deterministic {@link Faker}
      */

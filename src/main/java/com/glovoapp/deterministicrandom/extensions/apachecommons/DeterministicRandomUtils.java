@@ -13,6 +13,12 @@ public final class DeterministicRandomUtils {
 
     private static final AtomicBoolean IS_DETERMINISTIC = new AtomicBoolean(false);
 
+    private DeterministicRandomUtils() throws IllegalAccessException {
+        throw new IllegalAccessException(
+            getClass() + " is a static methods collection of which instances should not be created"
+        );
+    }
+
     /**
      * Overwrites the {@link java.util.Random} static field of {@link RandomUtils}. Calling this
      * method will affect methods of {@link RandomUtils} globally. This method may be called only

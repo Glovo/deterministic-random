@@ -19,6 +19,12 @@ public final class DeterministicDataFactory {
     private static final Logger LOG = Logger.getLogger(DeterministicDataFactory.class.getName());
     private static final AtomicReference<DataFactory> DATA_FACTORY = new AtomicReference<>(null);
 
+    private DeterministicDataFactory() throws IllegalAccessException {
+        throw new IllegalAccessException(
+            getClass() + " is a static methods collection of which instances should not be created"
+        );
+    }
+
     /**
      * Creates a global instance of {@link DataFactory}. Only one instance may exist at a time, see
      * {@link #createDataFactory(DeterministicRandom)} for ore information about this issue.

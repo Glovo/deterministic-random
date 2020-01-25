@@ -18,6 +18,12 @@ public final class DeterministicFairy {
 
     private static final Fairy FAIRY = create();
 
+    private DeterministicFairy() throws IllegalAccessException {
+        throw new IllegalAccessException(
+            getClass() + " is a static methods collection of which instances should not be created"
+        );
+    }
+
     /**
      * @return a global instance of deterministic {@link Fairy}
      */
