@@ -9,12 +9,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import org.uncommons.maths.random.MersenneTwisterRNG;
-import org.uncommons.maths.random.SeedException;
 
 /**
  * <h1 color="red"> This class is unsafe to use in production environment!</h1><br/>
@@ -57,22 +55,22 @@ import org.uncommons.maths.random.SeedException;
 public final class DeterministicRandom extends Random {
 
     private final Map<Integer, ThreadLocal<Random>> stackTraceHashCodesToRandoms = new ConcurrentHashMap<>();
-    private final Function<? super Integer, ? extends Random> randomOfSeedSupplier;
+    private final RandomOfSeedConstructor randomOfSeedConstructor;
 
+    /**
+     * By default {@link MersenneTwisterRNG} will be used for generating random values.
+     *
+     * @see #DeterministicRandom(RandomOfSeedConstructor) constructor that allows custom generators
+     */
     public DeterministicRandom() {
-        this(it -> {
-            try {
-                return new MersenneTwisterRNG(new DeterministicLongSeedGenerator(it));
-            } catch (SeedException exception) {
-                throw new RandomNumberGeneratorInitializationException(exception);
-            }
-        });
+        this(it -> new MersenneTwisterRNG(new DeterministicLongSeedGenerator(it)));
     }
 
-    private DeterministicRandom(
-        final Function<? super Integer, ? extends Random> randomOfSeedSupplier
-    ) {
-        this.randomOfSeedSupplier = randomOfSeedSupplier;
+    /**
+     * @param randomOfSeedConstructor to be used for creating random number generators
+     */
+    public DeterministicRandom(final RandomOfSeedConstructor randomOfSeedConstructor) {
+        this.randomOfSeedConstructor = randomOfSeedConstructor;
     }
 
     @Override
@@ -208,10 +206,18 @@ public final class DeterministicRandom extends Random {
             .map(StackTraceElement::hashCode)
             .reduce(Objects::hash)
             .map(hashCode -> stackTraceHashCodesToRandoms.computeIfAbsent(hashCode, code ->
-                ThreadLocal.<Random>withInitial(() -> randomOfSeedSupplier.apply(code))
+                ThreadLocal.<Random>withInitial(() -> getRandomBySeedOrThrow(code))
             ))
             .map(ThreadLocal::get)
             .orElseThrow(InternalException::new);
+    }
+
+    private Random getRandomBySeedOrThrow(final int seed) {
+        try {
+            return randomOfSeedConstructor.getBySeed(seed);
+        } catch (final Exception exception) {
+            throw new RandomNumberGeneratorInitializationException(exception);
+        }
     }
 
     @Override
