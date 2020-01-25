@@ -9,16 +9,12 @@ import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.TypedA
 import java.util.stream.Stream;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-/**
- * Test case {@link DeterministicRandomTestCases#shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(MethodUnderTest)}
- * has been deliberately excluded from this test as {@link RandomUtils} is a static methods
- * collection and the {@link com.glovoapp.deterministicrandom.DeterministicRandom} object can only
- * be injected once.
- */
+
 class DeterministicRandomUtilsTest {
 
     private static final DeterministicRandomTestCases<RandomUtils> TEST_CASES
@@ -43,6 +39,20 @@ class DeterministicRandomUtilsTest {
         final MethodUnderTest<RandomUtils> method
     ) {
         TEST_CASES.shouldReturnDifferentValues_whenCalledInALoop(method);
+    }
+
+    /**
+     * This test case has been deliberately excluded from this test as {@link RandomUtils} is a
+     * static methods collection and the {@link com.glovoapp.deterministicrandom.DeterministicRandom}
+     * object can only be injected once.
+     */
+    @ParameterizedTest
+    @MethodSource("provideMethodReferences")
+    @Disabled("testing not possible due to global state limitations")
+    void shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(
+        final MethodUnderTest<RandomUtils> method
+    ) {
+        TEST_CASES.shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(method);
     }
 
     @ParameterizedTest
