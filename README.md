@@ -43,6 +43,44 @@ public final class ExampleApplication {
 
 Will print the same message, no matter how many times it's executed.
 
+#### Inheriting from `java.util.Random`
+
+One could argue that the `DeterministicRandom` class is breaking [LSP](https://en.wikipedia.org/wiki/Liskov_substitution_principle) by inheriting from `java.util.Random`.
+Being predictable as it is, the generated values are not "truly random".
+
+This is however a philosophical rather than technical question.
+Consider the following implementation:
+
+```java
+public final class ConstantValueReturningRandom extends java.util.Random {
+
+    private final AtomicInteger counter = new AtomicInteger(Integer.MIN_VALUE);
+
+    @Override
+    public final int nextInt() {
+        return counter.getAndIncrement();
+    }
+
+    // … other methods of java.util.Random implemented in similar fashion
+
+}
+```
+
+Does the `nextInt` method return what is expected from it?
+According to [the documentation](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html#nextInt--) the result must be:
+
+ * pseudorandom
+ * uniformly distributed; all possible int values are produced with (approximately) equal probability
+
+It definitely meets the "uniform distribution" requirement.
+Execute this method enough times and you will see that all possible `int` values are produced with exactly the same frequency.
+
+The definition of "pseudorandom" is a bit fuzzy, though.
+How well does a random number generator need to approximate truly random numbers?
+This depends on the use case; obviously, `DeterministicRandom` is not meant to be of cryptographic quality. 
+
+In conclusion, `DeterministicRandom` class *is* a valid random number generator… with an extremely low entropy.
+
 ### Extensions
 
 There are a few static factories for popular random data generation libraries included in this project.
