@@ -4,7 +4,6 @@ import com.devskiller.jfairy.producer.RandomGenerator;
 import com.glovoapp.deterministicrandom.DeterministicRandom;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
@@ -12,9 +11,11 @@ import org.apache.commons.math3.random.RandomDataGenerator;
  */
 final class DeterministicJFairyRandomGenerator extends RandomGenerator {
 
+    private final DeterministicRandom deterministicRandom;
     private final RandomDataGenerator randomDataGenerator;
 
     DeterministicJFairyRandomGenerator(final DeterministicRandom deterministicRandom) {
+        this.deterministicRandom = deterministicRandom;
         randomDataGenerator = new RandomDataGenerator(
             new DeterministicRandomGenerator(deterministicRandom)
         );
@@ -28,7 +29,7 @@ final class DeterministicJFairyRandomGenerator extends RandomGenerator {
 
     @Override
     public final <T> List<T> shuffle(final List<T> elements) {
-        Collections.shuffle(elements, (Random) randomDataGenerator.getRandomGenerator());
+        Collections.shuffle(elements, deterministicRandom);
         return elements;
     }
 
