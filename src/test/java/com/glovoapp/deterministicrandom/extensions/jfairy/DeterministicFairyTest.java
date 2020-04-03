@@ -5,6 +5,7 @@ import static com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.company.Company;
 import com.devskiller.jfairy.producer.person.Person;
+import com.devskiller.jfairy.producer.text.TextProducer;
 import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases;
 import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.MethodUnderTest;
 import com.glovoapp.deterministicrandom.test.DeterministicRandomTestCases.TypedArguments;
@@ -57,7 +58,8 @@ class DeterministicFairyTest {
             methodArgument("person().getFirstName()", Fairy::person, Person::getFirstName),
             methodArgument("person().getLastName()", Fairy::person, Person::getLastName),
             methodArgument("company().getEmail()", Fairy::company, Company::getEmail),
-            methodArgument("company().getUrl()", Fairy::company, Company::getUrl)
+            methodArgument("company().getUrl()", Fairy::company, Company::getUrl),
+            methodArgument("textProducer().latinWord()", Fairy::textProducer, TextProducer::latinWord)
         );
     }
 
