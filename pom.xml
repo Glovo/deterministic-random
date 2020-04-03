@@ -6,7 +6,7 @@
 
   <groupId>com.glovoapp</groupId>
   <artifactId>deterministic-random</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 
   <properties>
     <java.version>1.8</java.version>
@@ -14,6 +14,13 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <!-- TODO: delombok resulting JAR so consumers don't have to include this -->
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.uncommons.maths</groupId>
       <artifactId>uncommons-maths</artifactId>
