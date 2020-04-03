@@ -49,6 +49,9 @@ class EffortlessFakerTest {
         assertNotNull(complexField.getExampleStringField());
     }
 
+    /**
+     * TODO: this still fails, needs to implement handling collections
+     */
     @Test
     void fillIn_shouldWorkForCollections_givenDefaultFaker() {
         final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
