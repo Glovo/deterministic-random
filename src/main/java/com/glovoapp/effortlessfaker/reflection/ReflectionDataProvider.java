@@ -16,8 +16,8 @@ final class ReflectionDataProvider<AnyType> implements DataProvider<AnyType> {
     private final Class<?> type;
     private final DataProviders delegate;
 
-    private ReflectionDataProvider(@Nonnull Class<?> type,
-                                   @Nonnull DataProviders delegate) {
+    ReflectionDataProvider(@Nonnull Class<?> type,
+                           @Nonnull DataProviders delegate) {
         this.type = requireDataClass(requireNonNull(type));
         this.delegate = requireNonNull(delegate);
     }
@@ -42,24 +42,7 @@ final class ReflectionDataProvider<AnyType> implements DataProvider<AnyType> {
             .orElseThrow(() -> new DataClassHasNoConstructorsException(type));
 
         final List<DataProvider<?>> parametersProviders = stream(constructor.getParameters())
-            .map(parameter -> delegate.getProviderFor(parameter.getName(), parameter.getType())
-                                      .orElseGet(
-                                          () -> {
-                                              try {
-                                                  return new ReflectionDataProvider<>(
-                                                      parameter.getType(),
-                                                      delegate
-                                                  );
-                                              } catch (final Exception exception) {
-                                                  throw new DataClassParameterProviderInitializationException(
-                                                      parameter.getName(),
-                                                      parameter.getType(),
-                                                      exception
-                                                  );
-                                              }
-                                          }
-                                      )
-            )
+            .map(parameter -> ParametersReflectionDataProviders.getFor(parameter, delegate))
             .collect(toList());
 
         final Object[] parameters;

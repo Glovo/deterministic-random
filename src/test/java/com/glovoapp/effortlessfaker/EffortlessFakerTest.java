@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,7 @@ class EffortlessFakerTest {
     static final class ExampleDataClassWithCollection {
 
         private final List<ExampleComposedDataClass> exampleComplexFields;
+        private final List<Set<Map<ExampleComposedDataClass, ExampleComposedDataClass>>> exampleComplicatedCollection;
 
     }
 
@@ -49,9 +52,6 @@ class EffortlessFakerTest {
         assertNotNull(complexField.getExampleStringField());
     }
 
-    /**
-     * TODO: this still fails, needs to implement handling collections
-     */
     @Test
     void fillIn_shouldWorkForCollections_givenDefaultFaker() {
         final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
@@ -64,6 +64,7 @@ class EffortlessFakerTest {
         assertNotNull(exampleDataObject.getExampleComplexFields());
         assertNotEquals(0, exampleDataObject.getExampleComplexFields()
                                             .size());
+        assertNotNull(exampleDataObject.getExampleComplicatedCollection());
     }
 
 }
