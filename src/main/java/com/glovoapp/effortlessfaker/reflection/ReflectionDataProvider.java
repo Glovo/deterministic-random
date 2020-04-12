@@ -35,7 +35,7 @@ final class ReflectionDataProvider<AnyType> implements DataProvider<AnyType> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+
     public AnyType provideData() {
         final Constructor<?> constructor = stream(type.getDeclaredConstructors())
             .max(comparing(Constructor::getParameterCount))
@@ -80,7 +80,8 @@ final class ReflectionDataProvider<AnyType> implements DataProvider<AnyType> {
         }
 
         try {
-            return (AnyType) data;
+            @SuppressWarnings("unchecked") final AnyType dataAsRequestedType = (AnyType) data;
+            return dataAsRequestedType;
         } catch (final Exception exception) {
             throw new DataClassCastingException(type, exception);
         }
