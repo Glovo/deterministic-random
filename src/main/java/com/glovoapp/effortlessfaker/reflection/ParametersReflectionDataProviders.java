@@ -17,45 +17,50 @@ final class ParametersReflectionDataProviders {
 
     static DataProvider<?> getFor(final String name, final Type type, final DataProviders delegate) {
         if (type instanceof Class) {
-            final Class<?> typeAsClass = (Class<?>) type;
-            return delegate.getProviderFor(name, typeAsClass)
-                           .orElseGet(() -> {
-                               try {
-                                   return new ReflectionDataProvider<>(
-                                       typeAsClass,
-                                       delegate
-                                   );
-                               } catch (final Exception exception) {
-                                   throw new DataClassParameterProviderInitializationException(
-                                       name,
-                                       typeAsClass,
-                                       exception
-                                   );
-                               }
-                           });
+            return getFor(name, (Class<?>) type, delegate);
         } else if (type instanceof ParameterizedType) {
-            final ParameterizedType parameterizedType = (ParameterizedType) type;
-            final Type[] typeArguments = parameterizedType.getActualTypeArguments();
-            final Type rawType = parameterizedType.getRawType();
+            return getFor(name, (ParameterizedType) type, delegate);
+        } else {
+            throw new TypeNotSupportedException(name, type);
+        }
+    }
 
-            if (rawType instanceof Class) {
-                final Class<?> rawClass = (Class<?>) rawType;
-                if (List.class.isAssignableFrom(rawClass)) {
-                    final Type valueType = typeArguments[0];
-                    return CollectionsDataProviders.ofList(getFor(name, valueType, delegate));
-                } else if (Set.class.isAssignableFrom(rawClass)) {
-                    final Type valueType = typeArguments[0];
-                    return CollectionsDataProviders.ofSet(getFor(name, valueType, delegate));
-                } else if (Map.class.isAssignableFrom(rawClass)) {
-                    final Type keyType = typeArguments[0];
-                    final Type valueType = typeArguments[1];
-                    return CollectionsDataProviders.ofMap(
-                        getFor(name, keyType, delegate),
-                        getFor(name, valueType, delegate)
-                    );
-                } else {
-                    throw new TypeNotSupportedException(name, type);
-                }
+    private static DataProvider<?> getFor(final String name, final Class<?> type, final DataProviders delegate) {
+        return delegate.getProviderFor(name, type)
+                       .orElseGet(() -> {
+                           try {
+                               return new ReflectionDataProvider<>(type, delegate);
+                           } catch (final Exception exception) {
+                               throw new DataClassParameterProviderInitializationException(
+                                   name,
+                                   type,
+                                   exception
+                               );
+                           }
+                       });
+    }
+
+    private static DataProvider<?> getFor(final String name,
+                                          final ParameterizedType type,
+                                          final DataProviders delegate) {
+        final Type[] typeArguments = type.getActualTypeArguments();
+        final Type rawType = type.getRawType();
+
+        if (rawType instanceof Class) {
+            final Class<?> rawClass = (Class<?>) rawType;
+            if (List.class.isAssignableFrom(rawClass)) {
+                final Type valueType = typeArguments[0];
+                return CollectionsDataProviders.ofList(getFor(name, valueType, delegate));
+            } else if (Set.class.isAssignableFrom(rawClass)) {
+                final Type valueType = typeArguments[0];
+                return CollectionsDataProviders.ofSet(getFor(name, valueType, delegate));
+            } else if (Map.class.isAssignableFrom(rawClass)) {
+                final Type keyType = typeArguments[0];
+                final Type valueType = typeArguments[1];
+                return CollectionsDataProviders.ofMap(
+                    getFor(name, keyType, delegate),
+                    getFor(name, valueType, delegate)
+                );
             } else {
                 throw new TypeNotSupportedException(name, type);
             }

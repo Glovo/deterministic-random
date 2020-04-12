@@ -2,6 +2,7 @@ package com.glovoapp.effortlessfaker;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,15 @@ class EffortlessFakerTest {
         assertNotEquals(0, exampleDataObject.getExampleComplexFields()
                                             .size());
         assertNotNull(exampleDataObject.getExampleComplicatedCollection());
+    }
+
+    @Test
+    void fillIn_shouldThrow_whenTheProviderIsMissing() {
+        final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
+                                                                      .withDataProviders(DataProviders.empty())
+                                                                      .create();
+
+        assertThrows(Exception.class, () -> effortlessFaker.fillIn(Object.class));
     }
 
 }
