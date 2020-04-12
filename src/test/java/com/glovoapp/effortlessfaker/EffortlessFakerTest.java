@@ -41,6 +41,17 @@ class EffortlessFakerTest {
     }
 
     @Test
+    void fillIn_shouldWorkOnClassFromReadme_givenDefaultFaker() {
+        final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
+                                                                      .create();
+
+        final SomeDataClass exampleDataObject = effortlessFaker.fillIn(SomeDataClass.class);
+
+        assertNotNull(exampleDataObject);
+        assertNotNull(exampleDataObject.getSomeStringParameter());
+    }
+
+    @Test
     void fillIn_shouldReturnAProperDataClass_givenDefaultFaker() {
         final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
                                                                       .create();
