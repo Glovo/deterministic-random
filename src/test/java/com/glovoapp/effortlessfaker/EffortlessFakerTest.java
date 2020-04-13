@@ -1,5 +1,6 @@
 package com.glovoapp.effortlessfaker;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,6 +39,25 @@ class EffortlessFakerTest {
         private final List<ExampleComposedDataClass> exampleComplexFields;
         private final List<Set<Map<ExampleComposedDataClass, ExampleComposedDataClass>>> exampleComplicatedCollection;
 
+    }
+
+    static final class ExampleClassWithTwoConstructorWhereNoArgsOneThrows {
+
+        ExampleClassWithTwoConstructorWhereNoArgsOneThrows() {
+            throw new IllegalStateException("this constructor shouldn't be called!");
+        }
+
+        ExampleClassWithTwoConstructorWhereNoArgsOneThrows(final int firstField, final String secondField) {
+        }
+
+    }
+
+    @Test
+    void fillIn_shouldChooseConstructorThatHasMostParameters_givenDefaultFaker() {
+        final EffortlessFaker effortlessFaker = EffortlessFakerBuilder.effortlessFaker()
+                                                                      .create();
+
+        assertDoesNotThrow(() -> effortlessFaker.fillIn(ExampleClassWithTwoConstructorWhereNoArgsOneThrows.class));
     }
 
     @Test
