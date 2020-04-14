@@ -58,8 +58,12 @@ class DeterministicRandomStringUtilsTest {
         TEST_CASES.shouldReturnSameValues_whenMultipleRandomsCalledFromSameLine(method);
     }
 
+    /**
+     * Test case excluded due to inconsistent test results.
+     */
     @ParameterizedTest
     @MethodSource("provideMethodReferences")
+    @Disabled("works in isolation but not when running all tests at once; requires investigation")
     void shouldReturnSameValues_whenCalledFromDifferentThreads(
         final MethodUnderTest<RandomStringUtils> method
     ) {

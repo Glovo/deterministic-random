@@ -9,17 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import org.junit.jupiter.params.provider.Arguments;
 
 /**
- * Provides a set of test methods that define the behavior of {@link
- * com.glovoapp.deterministicrandom.DeterministicRandom} and extensions.
+ * Provides a set of test methods that define the behavior of {@link com.glovoapp.deterministicrandom.DeterministicRandom}
+ * and extensions.
  *
  * @param <ClassUnderTest> the class under test
  */
@@ -102,10 +101,8 @@ public final class DeterministicRandomTestCases<ClassUnderTest> {
             .mapToObj(it -> randomsSupplier.get())
             .collect(toList());
 
-        final ExecutorService executorService = Executors.newFixedThreadPool(randomsAmount);
-
         final List<Future<Object>> results = randoms.stream()
-                                                    .map(random -> executorService.submit(() -> {
+                                                    .map(random -> callInNewThread(() -> {
                                                         sleep(10L);
                                                         return (Object) range(0, 10)
                                                             .mapToObj(it -> method.apply(random))
@@ -116,6 +113,27 @@ public final class DeterministicRandomTestCases<ClassUnderTest> {
         assertTrue(results.stream()
                           .map(DeterministicRandomTestCases::getFromFuture)
                           .allMatch(getFromFuture(results.get(0))::equals));
+    }
+
+    private static <T> Future<T> callInNewThread(final ThrowingCallable<T, ?> callable) {
+        final CompletableFuture<T> resultFuture = new CompletableFuture<>();
+
+        new Thread(() -> {
+            try {
+                final T result = callable.call();
+                resultFuture.complete(result);
+            } catch (Throwable throwable) {
+                resultFuture.completeExceptionally(throwable);
+            }
+        }).start();
+
+        return resultFuture;
+    }
+
+    private interface ThrowingCallable<T, E extends Throwable> {
+
+        T call() throws E;
+
     }
 
     private static <T> T getFromFuture(Future<T> future) {

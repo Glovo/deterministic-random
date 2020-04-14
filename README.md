@@ -136,3 +136,39 @@ DeterministicRandomStringUtils.makeDeterministic();
 // all static method calls will now be deterministic
 RandomStringUtils.randomAlphanumeric(10);
 ```
+
+### EffortlessFaker class
+
+The `EffortlessFaker` is a tool for populating new instances of data classes.
+
+It may be created (and configured) using the builder:
+
+```java
+final EffortlessFaker faker = EffortlessFakerBuilder.effortlessFaker().create();
+```
+
+By default, the builder uses `DeterministicRandom` with `JFairy` extension to create the faker.
+
+Then given a class like:
+
+```java
+final class SomeDataClass {
+
+    private final String someStringParameter;
+    private final int somePrimitiveParameter;
+
+    // … constructors and getters
+
+}
+```
+
+The faker will create a new instance and fill all the fields in:
+
+```java
+final SomeDataClass someDataObject = faker.fillIn(SomeDataClass.class);
+someDataObject.getSomeStringParameter(); // returns "congue nibh proin"
+someDataObject.getSomePrimitiveParameter(); // returns -212014988
+```
+
+Additionally, the faker uses names of fields to decide what values should be generated for them.
+By default, names of fields matching methods of `JFairy` getters (such as `firstName`) are supported. 
