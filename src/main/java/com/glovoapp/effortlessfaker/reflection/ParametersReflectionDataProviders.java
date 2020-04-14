@@ -20,9 +20,9 @@ final class ParametersReflectionDataProviders {
             return getFor(name, (Class<?>) type, delegate);
         } else if (type instanceof ParameterizedType) {
             return getFor(name, (ParameterizedType) type, delegate);
-        } else {
-            throw new TypeNotSupportedException(name, type);
         }
+
+        throw new TypeNotSupportedException(name, type);
     }
 
     private static DataProvider<?> getFor(final String name, final Class<?> type, final DataProviders delegate) {
@@ -61,12 +61,10 @@ final class ParametersReflectionDataProviders {
                     getFor(name, keyType, delegate),
                     getFor(name, valueType, delegate)
                 );
-            } else {
-                throw new TypeNotSupportedException(name, type);
             }
-        } else {
-            throw new TypeNotSupportedException(name, type);
         }
+
+        throw new TypeNotSupportedException(name, type);
     }
 
 }
