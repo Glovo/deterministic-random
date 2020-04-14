@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -153,11 +152,10 @@ public final class DataProvidersBuilder {
 
     public final DataProviders build() {
         return new DataProviders() {
-            @Nonnull
             @Override
             @SuppressWarnings("unchecked")
-            public <FieldType> Optional<DataProvider<FieldType>> getProviderFor(@Nonnull String fieldName,
-                                                                                @Nonnull Class<? extends FieldType> fieldClass) {
+            public <FieldType> Optional<DataProvider<FieldType>> getProviderFor(String fieldName,
+                                                                                Class<? extends FieldType> fieldClass) {
                 return providers.stream()
                                 .filter(specification -> specification.getFieldNamePredicate()
                                                                       .test(fieldName))

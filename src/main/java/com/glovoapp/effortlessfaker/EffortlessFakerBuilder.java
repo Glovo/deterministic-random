@@ -5,7 +5,6 @@ import static lombok.AccessLevel.PRIVATE;
 import com.glovoapp.deterministicrandom.extensions.jfairy.DeterministicFairy;
 import com.glovoapp.effortlessfaker.extensions.jfairy.JFairyDataProviders;
 import com.glovoapp.effortlessfaker.reflection.ReflectionDataProviders;
-import javax.annotation.Nonnull;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
@@ -31,9 +30,8 @@ public final class EffortlessFakerBuilder {
 
     final EffortlessFaker create() {
         return new EffortlessFaker() {
-            @Nonnull
             @Override
-            public <ObjectToFill> ObjectToFill fillIn(@Nonnull Class<? extends ObjectToFill> classToFill) {
+            public <ObjectToFill> ObjectToFill fillIn(Class<? extends ObjectToFill> classToFill) {
                 return dataProviders.getProviderFor("", classToFill)
                                     .orElseThrow(() -> new MissingDataProviderException(classToFill))
                                     .provideData();

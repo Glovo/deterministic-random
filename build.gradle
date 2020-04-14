@@ -8,27 +8,38 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('http://repo.maven.apache.org/maven2')
-    }
+    mavenCentral()
 }
 
 dependencies {
     implementation 'org.uncommons.maths:uncommons-maths:1.2.2a'
     compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // Extensions
+    runtimeOnly 'com.github.javafaker:javafaker:1.0.1'
+    runtimeOnly 'com.devskiller:jfairy:0.6.2'
+    runtimeOnly 'org.fluttercode.datafactory:datafactory:0.8'
+    runtimeOnly 'org.apache.commons:commons-lang3:3.9'
+
+    // Testing
     compileOnly 'org.junit.jupiter:junit-jupiter-api:5.5.2'
     compileOnly 'org.junit.jupiter:junit-jupiter-params:5.5.2'
     compileOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
-    compileOnly 'com.github.javafaker:javafaker:1.0.1'
-    compileOnly 'com.devskiller:jfairy:0.6.2'
-    compileOnly 'org.fluttercode.datafactory:datafactory:0.8'
-    compileOnly 'org.apache.commons:commons-lang3:3.9'
+    testCompileOnly 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testCompileOnly 'org.junit.jupiter:junit-jupiter-params:5.5.2'
+    testCompileOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
 }
 
 group = 'com.glovoapp'
 version = '1.0.1'
 sourceCompatibility = '1.8'
+
+javadoc {
+    failOnError = false
+}
 
 java {
     withSourcesJar()

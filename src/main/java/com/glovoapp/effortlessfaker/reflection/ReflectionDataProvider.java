@@ -9,21 +9,20 @@ import com.glovoapp.effortlessfaker.DataProvider;
 import com.glovoapp.effortlessfaker.DataProviders;
 import java.lang.reflect.Constructor;
 import java.util.List;
-import javax.annotation.Nonnull;
 
 final class ReflectionDataProvider<AnyType> implements DataProvider<AnyType> {
 
     private final Class<?> type;
     private final DataProviders delegate;
 
-    ReflectionDataProvider(@Nonnull Class<?> type,
-                           @Nonnull DataProviders delegate) {
+    ReflectionDataProvider(Class<?> type,
+                           DataProviders delegate) {
         this.type = requireDataClass(requireNonNull(type));
         this.delegate = requireNonNull(delegate);
     }
 
-    static <AnyType> ReflectionDataProvider<AnyType> of(@Nonnull Class<? extends AnyType> type,
-                                                        @Nonnull DataProviders delegate) {
+    static <AnyType> ReflectionDataProvider<AnyType> of(Class<? extends AnyType> type,
+                                                        DataProviders delegate) {
         return new ReflectionDataProvider<>(type, delegate);
     }
 

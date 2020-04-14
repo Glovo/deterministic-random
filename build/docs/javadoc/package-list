@@ -1,0 +1,10 @@
+com.glovoapp.deterministicrandom
+com.glovoapp.deterministicrandom.extensions
+com.glovoapp.deterministicrandom.extensions.apachecommons
+com.glovoapp.deterministicrandom.extensions.datafactory
+com.glovoapp.deterministicrandom.extensions.faker
+com.glovoapp.deterministicrandom.extensions.jfairy
+com.glovoapp.deterministicrandom.test
+com.glovoapp.effortlessfaker
+com.glovoapp.effortlessfaker.extensions.jfairy
+com.glovoapp.effortlessfaker.reflection

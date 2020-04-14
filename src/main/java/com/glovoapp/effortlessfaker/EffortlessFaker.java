@@ -1,7 +1,5 @@
 package com.glovoapp.effortlessfaker;
 
-import javax.annotation.Nonnull;
-
 /**
  * Allows easy creation of fake objects. The {@link #fillIn(Class)} method should be the only entry-point to this API.
  * Compatible classes must:
@@ -28,7 +26,6 @@ public interface EffortlessFaker {
      * @param <ObjectToFill> type of the object to be initialized
      * @return initialized object of given type, never null
      */
-    @Nonnull
-    <ObjectToFill> ObjectToFill fillIn(@Nonnull final Class<? extends ObjectToFill> classToFill);
+    <ObjectToFill> ObjectToFill fillIn(final Class<? extends ObjectToFill> classToFill);
 
 }

@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +34,7 @@ enum PrimitiveToBoxedClassMappings {
     private final Class<?> mapFrom;
     private final Class<?> mapTo;
 
-    static Optional<Class<?>> getCompatibleClass(@Nonnull final Class<?> boxedOrPrimitive) {
+    static Optional<Class<?>> getCompatibleClass(final Class<?> boxedOrPrimitive) {
         requireNonNull(boxedOrPrimitive);
         final Optional<? extends Class<?>> compatibleClass = stream(values())
             .filter(mapping -> mapping.mapFrom.equals(boxedOrPrimitive))

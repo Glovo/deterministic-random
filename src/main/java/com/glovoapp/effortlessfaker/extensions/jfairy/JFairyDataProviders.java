@@ -3,10 +3,7 @@ package com.glovoapp.effortlessfaker.extensions.jfairy;
 import static com.glovoapp.effortlessfaker.DataProvidersBuilder.dataProviders;
 
 import com.devskiller.jfairy.Fairy;
-import com.glovoapp.effortlessfaker.DataProvider;
 import com.glovoapp.effortlessfaker.DataProviders;
-import java.util.Optional;
-import javax.annotation.Nonnull;
 
 public interface JFairyDataProviders extends DataProviders {
 
@@ -27,14 +24,7 @@ public interface JFairyDataProviders extends DataProviders {
             .withProvider(Boolean.class, fairy.baseProducer()::trueOrFalse)
             .build();
 
-        return new JFairyDataProviders() {
-            @Nonnull
-            @Override
-            public <FieldType> Optional<DataProvider<FieldType>> getProviderFor(@Nonnull String fieldName,
-                                                                                @Nonnull Class<? extends FieldType> fieldClass) {
-                return delegate.getProviderFor(fieldName, fieldClass);
-            }
-        };
+        return delegate::getProviderFor;
     }
 
 }
