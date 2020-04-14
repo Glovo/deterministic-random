@@ -171,4 +171,14 @@ someDataObject.getSomePrimitiveParameter(); // returns -212014988
 ```
 
 Additionally, the faker uses names of fields to decide what values should be generated for them.
-By default, names of fields matching methods of `JFairy` getters (such as `firstName`) are supported. 
+By default, names of fields matching methods of `JFairy` getters (such as `firstName`) are supported.
+
+## Building the project
+
+To compile and package the project as JAR file, run:
+
+```bash
+mvn clean package
+```
+
+This will also run all the unit tests.
