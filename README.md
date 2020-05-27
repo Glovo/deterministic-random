@@ -16,6 +16,38 @@ This library aims to combine the best of these two worlds: simplicity of using r
 
 ## Usage
 
+### Dependency
+
+Add the Glovo repository on jFrog (configuration for Maven):
+
+```xml
+<repositories>
+  <repository>
+    <name>jFrog Glovo Releases</name>
+    <id>jfrog-glovo-releases</id>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <url>https://bintray.com/glovo/releases</url>
+  </repository>
+</repositories>
+```
+
+Then add the latest version of the artifact to your dependencies:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>com.glovoapp</groupId>
+    <artifactId>deterministic-random</artifactId>
+    <version>1.0.1</version>
+  </dependency>
+  <!--…other dependencies-->
+</dependencies>
+```
+
+### Important notice
+
 Before using this library, please take time to understand how data affects your tests.
 
 As a rule of thumb, this library is OK to use for tests where: 
