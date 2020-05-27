@@ -180,7 +180,7 @@ By default, names of fields matching methods of `JFairy` getters (such as `first
 To compile and package the project as JAR file, run:
 
 ```bash
-mvn clean package
+./gradlew :clean :test :fatJar
 ```
 
 This will also run all the unit tests.
