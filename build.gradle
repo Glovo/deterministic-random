@@ -7,6 +7,10 @@ plugins {
     id 'maven-publish'
 }
 
+test {
+    useJUnitPlatform()
+}
+
 repositories {
     mavenCentral()
 }
