@@ -26,5 +26,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-      - name: Release from the tag
-        run: ./gradlew -Prelease.useLastTag=true final
