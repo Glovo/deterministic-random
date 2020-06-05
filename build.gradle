@@ -9,6 +9,7 @@ plugins {
 
 nebulaRelease {
     Set<String> releaseBranchPatterns = [] as Set
+    addReleaseBranchPattern(/\d-.+/)
 }
 
 bintray {
