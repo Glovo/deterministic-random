@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id "nebula.maven-publish" version "17.2.1"
-//    id "nebula.javadoc-jar" version "17.2.1"
-    id "nebula.source-jar" version "17.2.1"
-    id "nebula.release" version "15.0.2"
-    id 'nebula.nebula-bintray' version '7.3.0'
+    id 'nebula.maven-publish:17.2.1'
+//    id 'nebula.javadoc-jar:17.2.1'
+    id 'nebula.source-jar:17.2.1'
+    id 'nebula.release:15.0.2'
+    id 'com.netflix.nebula:nebula-bintray-plugin:8.4.0'
 }
 
 bintray {
