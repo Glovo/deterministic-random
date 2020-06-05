@@ -7,6 +7,19 @@ plugins {
     id "nebula.nebula-bintray-publishing" version "8.4.0"
 }
 
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    pkg {
+        userOrg = "glovo"
+        repo = "releases"
+        websiteUrl = "https://glovoapp.com/"
+        issueTrackerUrl = "https://github.com/robfletcher/gradle-release-demo/issues"
+        vcsUrl = "https://github.com/Glovo/deterministic-random/issues"
+        licenses = ["GPLv3"]
+    }
+}
+
 test {
     useJUnitPlatform()
 }
@@ -47,15 +60,3 @@ group = 'com.glovoapp'
 apply plugin: "nebula.release"
 sourceCompatibility = '1.8'
 
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
-    pkg {
-        userOrg = "glovo"
-        repo = "releases"
-        websiteUrl = "https://glovoapp.com/"
-        issueTrackerUrl = "https://github.com/robfletcher/gradle-release-demo/issues"
-        vcsUrl = "https://github.com/Glovo/deterministic-random/issues"
-        licenses = ["GPLv3"]
-    }
-}
