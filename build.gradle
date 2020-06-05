@@ -62,6 +62,6 @@ apply plugin: "nebula.release"
 sourceCompatibility = '1.8'
 
 nebulaRelease {
-    addReleaseBranchPattern(/\d-.+/)
+    addReleaseBranchPattern(/**/)
 }
 
