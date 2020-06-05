@@ -62,7 +62,7 @@ apply plugin: "nebula.release"
 sourceCompatibility = '1.8'
 
 nebulaRelease {
+    Set<String> excludeBranchPatterns = [/master/, /HEAD/, /(release(-|\/))?\d+(\.\d+)?\.x/, /v?\d+\.\d+\.\d+/] as Set
     Set<String> releaseBranchPatterns = [] as Set
-    addReleaseBranchPattern(/\d-.+/)
 }
 
