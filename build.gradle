@@ -8,7 +8,7 @@ plugins {
 }
 
 nebulaRelease {
-    addReleaseBranchPattern(/\d-.+/)
+    Set<String> releaseBranchPatterns = [] as Set
 }
 
 bintray {
