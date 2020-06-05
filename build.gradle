@@ -17,8 +17,8 @@ bintray {
     issueTrackerUrl = "https://github.com/robfletcher/gradle-release-demo/issues"
     vcsUrl = "https://github.com/Glovo/deterministic-random/issues"
     licenses = ["GPLv3"]
-    gppSign = false
-    syncToMavenCentral = false
+//    gppSign = false
+//    syncToMavenCentral = false
 }
 
 test {
@@ -60,8 +60,3 @@ dependencies {
 group = 'com.glovoapp'
 apply plugin: "nebula.release"
 sourceCompatibility = '1.8'
-
-nebulaRelease {
-    addReleaseBranchPattern(/\w+-.+/)
-}
-
