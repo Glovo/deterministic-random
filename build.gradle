@@ -8,8 +8,8 @@ plugins {
 }
 
 bintray {
-    artifactory_user = System.getenv("BINTRAY_USER")
-    artifactory_key = System.getenv("BINTRAY_KEY")
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
     pkg {
         userOrg = "glovo"
         repo = "releases"
