@@ -9,7 +9,7 @@ plugins {
 
 bintray {
     user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
+    apiKey = System.getenv("BINTRAY_KEY")
     pkg {
         userOrg = "glovo"
         repo = "releases"
