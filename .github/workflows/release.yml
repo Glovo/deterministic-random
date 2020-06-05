@@ -1,0 +1,30 @@
+name: deterministic-random
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build
+        run: ./gradlew build
+      - name: Test
+        run: ./gradlew test
+      - name: Github Tag Bump
+        uses: anothrNick/github-tag-action@1.22.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+      - name: Release from the tag
+        run: ./gradlew -Prelease.useLastTag=true final
