@@ -5,12 +5,12 @@ plugins {
     id "nebula.source-jar" version "17.2.1"
     id "nebula.release" version "15.0.2"
     id "nebula.nebula-bintray-publishing" version "8.4.0"
+    nebulaRelease {
+        Set<String> releaseBranchPatterns = [] as Set
+        addReleaseBranchPattern(/\d-.+/)
+    }
 }
 
-nebulaRelease {
-    Set<String> releaseBranchPatterns = [] as Set
-    addReleaseBranchPattern(/\d-.+/)
-}
 
 bintray {
     user = findProperty('bintrayUser') ?: System.getenv('BINTRAY_USER')
