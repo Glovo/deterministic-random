@@ -3,7 +3,7 @@ plugins {
     id "nebula.maven-publish" version "17.2.1"
 //    id "nebula.javadoc-jar" version "17.2.1"
     id "nebula.source-jar" version "17.2.1"
-    id "nebula.release" version "13.0.0"
+    id "nebula.release" version "15.0.2"
     id "nebula.nebula-bintray-publishing" version "8.4.0"
 }
 
